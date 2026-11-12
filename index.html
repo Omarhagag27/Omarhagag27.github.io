@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Omar Hagag – Backend developer</title>
+<meta name="description" content="Omar Hagag, third-year Computer Science student at Assiut University, building backend tools with Python and Flask. open to internship opportunities.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>♞</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--head:'Bricolage Grotesque',system-ui,sans-serif;--body:'Figtree',system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace;--ar:'Amiri',serif;
+  --bg:#1f242b;--accent:#4ade80;--fg:#e6edf3;--mute:#9aa7b5;--line:#38404b;--panel:#272d36;--deep:#171b21;--blue:#5aa9ff}
+body[data-room=chess]{--bg:#16261f;--panel:#1d3329;--line:#2d4f40}
+body[data-room=study]{--bg:#0e1a2c;--accent:#5aa9ff;--panel:#142339;--line:#24405f}
+body[data-room=beyond]{--bg:#0b1a21;--accent:#7fd6ff;--panel:#112530;--line:#1f4050}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--fg);font:400 1.05rem/1.65 var(--body);transition:background .8s ease;overflow-x:hidden}
+a{color:var(--accent);text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+h1,h2,h3{font-family:var(--head);line-height:1.1}
+h2{font-size:clamp(2rem,4.5vw,2.8rem);font-weight:800;margin-bottom:1.6rem}
+p{max-width:62ch}
+.wrap{max-width:1040px;margin:0 auto;padding:0 1.4rem;position:relative;z-index:2}
+.room{position:relative;padding:6rem 0;overflow:hidden}
+#glow{position:fixed;left:0;top:0;width:480px;height:480px;margin:-240px 0 0 -240px;border-radius:50%;pointer-events:none;z-index:1;background:radial-gradient(circle,var(--accent),transparent 65%);opacity:.08}
+@media(pointer:coarse){#glow{display:none}}
+
+#dots{position:fixed;right:1rem;top:50%;transform:translateY(-50%);z-index:20;display:grid;gap:.9rem}
+#dots a{display:flex;align-items:center;justify-content:flex-end;gap:.6rem;text-decoration:none;color:var(--mute);font:.8rem var(--mono)}
+#dots a span{opacity:0;transform:translateX(6px);transition:.2s}
+#dots a:hover span{opacity:1;transform:none}
+#dots a i{width:10px;height:10px;border-radius:50%;border:2px solid var(--mute);transition:.25s}
+#dots a.on i,#dots a:hover i{background:var(--accent);border-color:var(--accent);transform:scale(1.3)}
+@media(max-width:900px){#dots{display:none}}
+
+.term{background:var(--deep);border:1px solid var(--line);border-radius:10px;overflow:hidden;font-family:var(--mono)}
+.term header{display:flex;gap:6px;padding:.6rem .8rem;background:#0003;border-bottom:1px solid var(--line)}
+.term header i{width:10px;height:10px;border-radius:50%;background:var(--line)}
+.term .b{padding:1rem 1.1rem}
+.term small{color:var(--mute);display:block;margin-bottom:.6rem;font-size:.85rem}
+
+/* hero */
+#hero{min-height:100svh;display:flex;align-items:center}
+.hero{display:grid;grid-template-columns:1.25fr .75fr;gap:2.5rem;align-items:center;width:100%}
+.hero>div{min-width:0}
+.hero h1{font-size:clamp(3rem,8vw,5.2rem);font-weight:800;letter-spacing:-.03em}
+.role{color:var(--blue);font:600 1.15rem var(--mono);margin:.6rem 0 1.2rem}
+.caret{display:inline-block;width:.6rem;height:1.1em;background:var(--accent);margin-left:2px;vertical-align:-.15em;animation:bl 1s steps(1) infinite}
+@keyframes bl{50%{opacity:0}}
+.lead{color:var(--mute);font-size:1.15rem}
+.cta{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.8rem}
+.btn{display:inline-block;background:var(--accent);color:#0d1f14;font-weight:600;text-decoration:none;border-radius:8px;padding:.75rem 1.3rem;border:1px solid var(--accent);transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-3px);box-shadow:0 10px 26px color-mix(in srgb,var(--accent) 35%,transparent)}
+.btn.ghost{background:transparent;color:var(--fg);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--accent)}
+.photo{position:relative;justify-self:center;width:min(100%,290px)}
+.photo img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:12px;position:relative;z-index:1}
+.photo::before{content:"";position:absolute;inset:16px -16px -16px 16px;border-radius:12px;background:conic-gradient(var(--panel) 25%,var(--blue) 0 50%,var(--panel) 0 75%,var(--blue) 0) 0 0/48px 48px;opacity:.5}
+
+/* projects */
+#projects::before,#projects::after{content:"";position:absolute;inset:0;background:conic-gradient(#ffffff08 25%,transparent 0 50%,#ffffff08 0 75%,transparent 0) 0 0/110px 110px}
+#projects::after{background:conic-gradient(color-mix(in srgb,var(--accent) 20%,transparent) 25%,transparent 0 50%,color-mix(in srgb,var(--accent) 20%,transparent) 0 75%,transparent 0) 0 0/110px 110px;
+  -webkit-mask:radial-gradient(circle 240px at var(--sx,-999px) var(--sy,-999px),#000,transparent);mask:radial-gradient(circle 240px at var(--sx,-999px) var(--sy,-999px),#000,transparent)}
+.boardrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:1.6rem;perspective:900px}
+.card{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:1.6rem;transition:transform .15s,border-color .2s,box-shadow .3s;overflow:hidden}
+.card:hover{border-color:var(--accent);box-shadow:0 18px 44px #0006}
+.card::after{content:"";position:absolute;inset:0;background:radial-gradient(circle 180px at var(--cx,50%) var(--cy,50%),#ffffff14,transparent);opacity:0;transition:opacity .2s;pointer-events:none}
+.card:hover::after{opacity:1}
+.card .pc{position:absolute;right:1rem;top:.4rem;font-size:3rem;opacity:.16;transition:transform .4s,opacity .3s}
+.card:hover .pc{transform:translateY(-6px) rotate(10deg);opacity:.4}
+.card h3{font-size:1.7rem}
+.tag{display:inline-block;font:600 .8rem var(--mono);color:var(--accent);margin:.3rem 0 .9rem}
+.card ul{padding-left:1.1rem;margin:.8rem 0}.card li{margin:.35rem 0}
+.stack{font:.85rem var(--mono);color:var(--mute);margin:.9rem 0}
+.links{display:flex;gap:1.1rem}
+.next{margin-top:2.4rem}.next h3{margin-bottom:.8rem}
+.next ul{list-style:none;padding:0;display:grid;gap:.7rem}
+.next li{border:1px dashed var(--line);border-radius:8px;padding:.9rem 1.1rem;background:#0003;transition:transform .2s,border-color .2s}
+.next li:hover{transform:translateX(8px);border-color:var(--accent)}
+
+/* study */
+.code{background:var(--deep);border:1px solid var(--line);border-radius:10px;padding:1.2rem 0;font:.95rem/1.9 var(--mono);overflow-x:auto;margin-bottom:1.8rem}
+.code div{padding:0 1.3rem;white-space:pre;transition:background .15s}
+.code div:hover{background:#5aa9ff1f}
+.k{color:#c792ea}.s{color:#4ade80}.c{color:#6c7a89}.f{color:#5aa9ff}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin-top:1.8rem}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:1.1rem;transition:transform .2s,border-color .2s}
+.tile:hover{transform:translateY(-5px);border-color:var(--accent)}
+.tile b{display:block;font:800 2.2rem var(--head);color:var(--accent)}
+.tile span{color:var(--mute);font-size:.9rem}
+
+/* beyond code */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:1.4rem;min-width:0}
+.box h3{font-size:1.2rem;margin-bottom:.9rem}
+.box.wide{grid-column:1/-1}
+.box p{color:var(--mute);font-size:.98rem}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem}
+.chips span{border:1px solid var(--line);border-radius:999px;padding:.25rem .9rem;font-size:.92rem;transition:border-color .2s,color .2s}
+.chips span:hover{border-color:var(--accent);color:var(--accent)}
+.rate{display:flex;gap:1.6rem}
+.rate b{display:block;font:800 2rem var(--head);color:var(--accent)}
+.rate span{color:var(--mute);font-size:.88rem}
+.ar{font:400 1.9rem/2 var(--ar);direction:rtl;color:#d8f0ff;margin:.2rem 0}
+#target{font:1.1rem/1.8 var(--mono);user-select:none;white-space:pre-wrap;overflow-wrap:anywhere}
+#target .w{display:inline-block;white-space:nowrap}
+#target .ok{color:var(--accent)}#target .bad{color:#ff7b72;text-decoration:underline}#target .cur{background:#5aa9ff55}
+#typer{width:100%;margin-top:.8rem;background:var(--bg);border:1px solid var(--line);border-radius:6px;color:var(--fg);font:1rem var(--mono);padding:.55rem .7rem}
+#result{min-height:1.6rem;margin-top:.7rem;font-size:.95rem;color:var(--mute)}#result b{color:var(--accent)}
+
+/* exit */
+#sky{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.closing{margin-top:2.6rem;padding-top:2rem;border-top:1px solid var(--line)}
+.closing h3{font-size:1.5rem;margin-bottom:.4rem}
+.closing p{color:var(--mute);margin-bottom:1rem}
+.top3{counter-reset:t;display:flex;flex-wrap:wrap;gap:.5rem}
+.top3 span{counter-increment:t}
+.top3 span::before{content:counter(t) ". ";color:var(--accent);font-family:var(--mono)}
+.contact .term .b{line-height:2.1}
+.contact .term .b>span{color:var(--accent)}
+.launch{display:inline-block;text-decoration:none;color:var(--fg);border:1px solid var(--line);border-radius:999px;padding:.1rem .9rem;margin:.2rem .4rem .2rem 0;transition:transform .2s,border-color .2s,box-shadow .3s}
+.launch i{display:inline-block;font-style:normal;color:var(--accent);margin-right:.4rem;transition:transform .5s}
+.launch:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 0 22px color-mix(in srgb,var(--accent) 40%,transparent)}
+.launch:hover i{transform:rotate(180deg) scale(1.3)}
+.shot{position:fixed;left:0;top:0;z-index:60;pointer-events:none;color:#fff;font-size:1.5rem;line-height:1;text-shadow:0 0 12px var(--accent),0 0 26px var(--accent);margin:-.75rem 0 0 -.75rem;opacity:0}
+
+@media(hover:none){#projects::after{display:none}}
+@media(max-width:760px){
+  .room{padding:4.5rem 0}
+  .hero{grid-template-columns:1fr;gap:1.6rem}
+  .photo{order:-1;width:min(65%,230px);justify-self:start}
+  .role{font-size:.95rem}
+  .grid2{grid-template-columns:1fr}
+  .term .b{padding:.9rem;font-size:.9rem}
+  #target{font-size:1rem}#typer{font-size:16px}
+  .code{font-size:.74rem;line-height:1.8}.code div{padding:0 .9rem}
+  .card{padding:1.2rem}.card h3{font-size:1.45rem}
+  .ar{font-size:1.6rem}
+  .btn{flex:1 1 100%;text-align:center}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body data-room="hero">
+<canvas id="sky"></canvas>
+<div id="glow"></div>
+<nav id="dots" aria-label="Sections">
+  <a href="#hero" class="on"><span>home</span><i></i></a><a href="#projects"><span>projects</span><i></i></a><a href="#about"><span>about</span><i></i></a><a href="#beyond"><span>beyond code</span><i></i></a>
+</nav>
+
+<main>
+<section class="room" id="hero" data-r="hero"><div class="wrap hero">
+  <div>
+    <h1>Omar Hagag</h1>
+    <p class="role" aria-label="Backend developer, in progress">Backend developer, <span id="typed"></span><span class="caret" aria-hidden="true"></span></p>
+    <p class="lead">Third-year Computer Science student at Assiut University. I build backend tools with Python and Flask, and I'm looking for a backend internship.</p>
+    <div class="cta">
+      <a class="btn" href="assets/Omar_Hagag_Backend_CV.pdf" download>Download CV</a>
+      <a class="btn ghost" href="https://github.com/Omarhagag27" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn ghost" href="mailto:omarhagag0101@gmail.com">Email me</a>
+    </div>
+  </div>
+  <div class="photo"><img src="assets/omar.jpg" alt="Omar Hagag smiling, wearing glasses and a black zip sweater"></div>
+</div></section>
+
+<section class="room" id="projects" data-r="chess"><div class="wrap">
+  <h2>Projects</h2>
+  <div class="boardrow">
+    <article class="card" data-tilt><span class="pc">♜</span>
+      <h3>Red-harvest</h3><div class="tag">in progress</div>
+      <p>A local web app for downloading video and audio with the settings you choose.</p>
+      <ul><li>Flask backend with format, resolution, playlist and output-folder options</li><li>yt-dlp and FFmpeg for retrieval, audio extraction and conversion</li><li>Building validation, status reporting and frontend error handling</li></ul>
+      <div class="stack">Python · Flask · JavaScript · yt-dlp · FFmpeg</div>
+      <div class="links"><a href="https://github.com/Omarhagag27/Red-harvest" target="_blank" rel="noopener">GitHub</a></div>
+    </article>
+    <article class="card" data-tilt><span class="pc">♞</span>
+      <h3>Gadwali</h3><div class="tag">deployed</div>
+      <p>A timetable viewer for university students, built from the faculty's Excel files.</p>
+      <ul><li>Python and openpyxl turn multi-sheet timetables, merged cells included, into JSON</li><li>Year, group and section filters, current and next class, overlap detection, saved selections</li><li>Built-in GPA calculator</li></ul>
+      <div class="stack">Python · openpyxl · JavaScript · HTML · CSS</div>
+      <div class="links"><a href="https://omarhagag27.github.io/gadwali/" target="_blank" rel="noopener">Live demo</a><a href="https://github.com/Omarhagag27/gadwali" target="_blank" rel="noopener">GitHub</a></div>
+    </article>
+  </div>
+  <div class="next"><h3>Next up</h3><ul>
+    <li><b>♛ A chess engine.</b> Move generation first, then evaluation and search.</li>
+    <li><b>♚ A task manager.</b> Built around my own time-management habits.</li>
+  </ul></div>
+</div></section>
+
+<section class="room" id="about" data-r="study"><div class="wrap">
+  <h2>About</h2>
+  <div class="code" aria-label="About me as code">
+<div><span class="k">class</span> <span class="f">Omar</span>:</div>
+<div>    role   = <span class="s">"Backend developer"</span></div>
+<div>    school = <span class="s">"Assiut University"</span>  <span class="c"># CS, year 3, class of 2028</span></div>
+<div>    stack  = [<span class="s">"C++"</span>, <span class="s">"Python"</span>, <span class="s">"Flask"</span>, <span class="s">"SQL"</span>, <span class="s">"Linux"</span>, <span class="s">"JavaScript"</span>]</div>
+<div>    <span class="k">def</span> <span class="f">goal</span>(self): <span class="k">return</span> <span class="s">"a backend internship, learning by shipping"</span></div>
+  </div>
+  <p>I like turning messy inputs into clean systems: Excel timetables into JSON, video links into the right file. I practice problem solving on Codeforces and in team contests, and I'm comfortable with data structures, algorithms, OOP, SQL, Git and the Linux command line.</p>
+  <div class="tiles">
+    <div class="tile"><b data-n="252">0</b><span>Codeforces problems solved</span></div>
+    <div class="tile"><b>44th</b><span>ECPC 2026 qualifier, of 300+ teams</span></div>
+    <div class="tile"><b data-n="5">0</b><span>problems solved at ECPC, in a team of three</span></div>
+  </div>
+</div></section>
+
+<section class="room" id="beyond" data-r="beyond"><div class="wrap">
+  <h2>Beyond code</h2>
+  <div class="grid2">
+    <div class="box wide"><h3>Typing test</h3>
+      <small style="color:var(--mute);display:block;margin-bottom:.6rem">My Monkeytype best on quotes is 81 WPM (108 on the English 200 word list). Can you beat it?</small>
+      <div id="target"></div>
+      <input id="typer" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" data-gramm="false" aria-label="Type the sentence above">
+      <div id="result" aria-live="polite">Tap the sentence and start typing.</div></div>
+    <div class="box"><h3>Chess</h3>
+      <div class="rate"><div><b>1394</b><span>Chess.com</span></div><div><b>1747</b><span>Lichess</span></div></div>
+      <p style="margin-top:.8rem">I play every day.</p></div>
+    <div class="box"><h3>Top 3 films</h3>
+      <div class="top3 chips"><span>The Shawshank Redemption</span><span>Interstellar</span><span>The Godfather</span></div>
+      <p style="margin-top:.8rem">Plus most of Nolan's work, and slowly the Top 250.</p></div>
+    <div class="box wide"><h3>A line I keep</h3>
+      <div class="ar" lang="ar">إِذا غامَرتَ في شَرَفٍ مَرومٍ<br>فَلا تَقنَع بِما دونَ النُجومِ</div>
+      <p>Al-Mutanabbi: If you venture toward a lofty goal, don't settle for less than the stars.</p></div>
+  </div>
+  <div class="closing">
+    <h3>building and open to opportunities</h3>
+    <p>I'm open to backend internships. The fastest way to reach me is email.</p>
+    <a class="launch" href="mailto:omarhagag0101@gmail.com"><i>✦</i>omarhagag0101@gmail.com</a><br>
+    <a class="launch" href="https://github.com/Omarhagag27"><i>✦</i>github</a><a class="launch" href="https://www.linkedin.com/in/omarhagag27/"><i>✦</i>linkedin</a><a class="launch" href="https://codeforces.com/profile/omarhagag"><i>✦</i>codeforces</a>
+  </div>
+</div></section>
+
+</main>
+
+<script>
+(function(){
+var $=function(s,c){return(c||document).querySelector(s)},$$=function(s,c){return[].slice.call((c||document).querySelectorAll(s))};
+var fine=matchMedia('(pointer:fine)').matches,calm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+// glow + board light follow the mouse
+var glow=$('#glow');
+if(fine)addEventListener('mousemove',function(e){
+  glow.style.transform='translate('+e.clientX+'px,'+e.clientY+'px)';
+  var r=$('#projects'),b=r.getBoundingClientRect();r.style.setProperty('--sx',(e.clientX-b.left)+'px');r.style.setProperty('--sy',(e.clientY-b.top)+'px')});
+
+// card tilt
+if(fine&&!calm)$$('[data-tilt]').forEach(function(el){
+  el.addEventListener('mousemove',function(e){var b=el.getBoundingClientRect(),x=(e.clientX-b.left)/b.width,y=(e.clientY-b.top)/b.height;
+    el.style.transform='rotateY('+((x-.5)*7)+'deg) rotateX('+((.5-y)*7)+'deg)';el.style.setProperty('--cx',x*100+'%');el.style.setProperty('--cy',y*100+'%')});
+  el.addEventListener('mouseleave',function(){el.style.transform=''})});
+
+// section switching
+var dots=$$('#dots a');
+var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){
+  document.body.dataset.room=e.target.dataset.r;
+  dots.forEach(function(d){d.classList.toggle('on',d.getAttribute('href')==='#'+e.target.id)})}})},{threshold:.5});
+$$('.room').forEach(function(r){io.observe(r)});
+
+// count up
+var co=new IntersectionObserver(function(en){en.forEach(function(e){if(!e.isIntersecting)return;co.unobserve(e.target);
+  var el=e.target,n=+el.dataset.n,t0=performance.now();
+  (function s(t){var p=calm?1:Math.min((t-t0)/1100,1);el.textContent=Math.round(n*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(s)})(t0)})},{threshold:.8});
+$$('[data-n]').forEach(function(e){co.observe(e)});
+
+// typed role
+var ty=$('#typed'),word='in progress',wi=0;
+if(calm){ty.textContent=word}else setTimeout(function n(){ty.textContent=word.slice(0,++wi);if(wi<word.length)setTimeout(n,90+Math.random()*70)},700);
+
+// night sky
+var sk=$('#sky'),sx=sk.getContext('2d'),S=[];
+function ss(){sk.width=innerWidth;sk.height=innerHeight}ss();addEventListener('resize',ss);
+for(var j=0;j<120;j++)S.push({x:Math.random(),y:Math.random(),r:Math.random()*1.4+.3,o:Math.random()*6});
+(function g(t){sx.clearRect(0,0,sk.width,sk.height);
+  S.forEach(function(p){sx.fillStyle='rgba(220,240,255,'+(.2+.7*Math.abs(Math.sin(calm?p.o:t/900+p.o)))+')';sx.beginPath();sx.arc(p.x*sk.width,p.y*sk.height,p.r,0,7);sx.fill()});
+  requestAnimationFrame(g)})(0);
+
+// star launch, then new tab
+function go(href){
+  if(href.indexOf('mailto:')===0){location.href=href;return}
+  var w=window.open(href,'_blank');
+  if(w){w.opener=null}else{location.href=href}
+}
+$$('.closing a.launch').forEach(function(a){a.addEventListener('click',function(e){
+  e.preventDefault();var href=a.href;
+  if(calm){go(href);return}
+  var b=a.getBoundingClientRect(),x0=b.left+b.width/2,y0=b.top+b.height/2,x1=innerWidth-90,y1=12;
+  for(var i=0;i<10;i++)(function(i){
+    var d=document.createElement('div');d.className='shot';d.textContent='✦';document.body.appendChild(d);
+    d.animate([{transform:'translate('+x0+'px,'+y0+'px) scale(1.7) rotate(0deg)',opacity:1-i*.09},
+               {transform:'translate('+x1+'px,'+y1+'px) scale(.3) rotate(540deg)',opacity:0}],
+              {duration:600,delay:i*24,easing:'cubic-bezier(.5,0,.9,.4)',fill:'forwards'}).onfinish=function(){d.remove()};
+  })(i);
+  setTimeout(function(){go(href)},640);
+})});
+
+// typing test
+var text="Build it, break it, then understand it properly.",BEST=81,t=$('#target'),inp=$('#typer'),res=$('#result'),start=0,done=false;
+function draw(v){var h="",open=false;
+  for(var i=0;i<text.length;i++){var ch=text[i],k="";
+    if(i<v.length)k=v[i]===ch?"ok":"bad";else if(i===v.length)k="cur";
+    if(ch===" "){if(open){h+='</span>';open=false}h+='<span class="'+k+'"> </span>'}
+    else{if(!open){h+='<span class="w">';open=true}h+='<span class="'+k+'">'+ch+'</span>'}}
+  if(open)h+='</span>';t.innerHTML=h}
+t.addEventListener('click',function(){inp.focus()});
+inp.addEventListener('input',function(){
+  if(done){inp.value="";start=0;done=false;draw("");return}
+  var v=inp.value;if(!start&&v.length)start=Date.now();draw(v);
+  if(v.length>=text.length){done=true;var m=(Date.now()-start)/60000,ok=0;
+    for(var i=0;i<text.length;i++)if(v[i]===text[i])ok++;
+    var w=Math.round((ok/5)/m),a=Math.round(ok/text.length*100);
+    res.innerHTML="<b>"+w+" WPM</b>, "+a+"% accuracy. "+(w>BEST&&a>=95?"You beat my 81. Respect.":"My best is "+BEST+". Type to try again.")}});
+draw("");
+})();
+</script>
+</body>
+</html>
